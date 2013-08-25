@@ -5,8 +5,8 @@ vim+ctags
 wget
 
 NFS启动的共享配置:
-/etc/exportfs
-	-- add this to tail: ``/srv/nfsroot/ 192.168.42.0/24(rw,sync,no_root_squash,no_subtree_check)``
-	-- 1, ``sudo exportfs -r``
-	-- 2, ``sudo tunctl -u $USER -t tap0``
-	-- 3, ``sudo ifconfig tap0 192.168.42.1``
+/etc/exportfs add this to tail: 
+    /srv/nfsroot/ 192.168.42.0/24(rw,sync,no_root_squash,no_subtree_check)
+  -- 1, ``sudo exportfs -r``
+  -- 2, ``sudo tunctl -u $USER -t tap0``
+  -- 3, ``sudo ifconfig tap0 192.168.42.1``
