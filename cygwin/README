@@ -1,8 +1,10 @@
-Choose the below software:
-1, Screen: 
-	a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells
+Cygwin env, Choose the below software :
 
-2, Devel（开发）目录下的包:
+1. Screen: 
+	终端窗口管理软件
+
+2. Devel（开发）目录下的包:
+	gcc: 编译软件
 	gcc-g++: C++ compiler
 	gcc-mingw-g++: Mingw32 support headers and libraries for GCC C++
 	gcc4-g++: G++ subpackage
@@ -12,61 +14,15 @@ Choose the below software:
 	pkg-config: A utility used to retrieve information about installed libraries
 	zlib-devel: The zlib compression/decompression library (development)
 
-3, Editor目录下的包：
+	autobuild, autoconf, automake, binutils, cmake, gcc-core, gcc-java, makedepend, pkg-config等等
+
+3. Editor目录下的包：
 	vim: Vi IMproved - enhanced vi editor
 
-4, Python目录下的包：
+4. Python目录下的包：
 	全部Install方式安装
 
-5, Web目录下的包：
+5. Web目录下的包：
 	wget: Utility to retrieve files from the WWW via HTTP and FTP
 	curl: Multi-protocol file transfer command-line tool，npm（node's package manager）
 
-6, 类似vim的Web浏览器:
-	w3m
-
-7, 配置Cygwin X环境:
-	必选：xorg-server, xinit
-	建议选择：xorg-docs , X-start-menu-icons
-	启动X11环境:
-		可以从Windows的开始菜单启动Cygwin X
-	
-8, 添加ssh登录支持(并且支持通过putty访问Cygwin X):
-	首先在cygwin中选择安装openssh
-
-	然后用命令 ssh-host-config  配置SSH  注意配置过程中一定要将sshd安装成Windows服务，已方便开机自动启动
-
-	生成ssh1的公钥和密钥：ssh-keygen -t rsa1
-
-	生成ssh2的公钥和密钥： 
-	生成公钥： ssh-keygen -t rsa 
-	生成密钥： ssh-keygen -t dsa
-
-	启动sshd服务（如果你需要重启机器的话，此步可免） 
-	cygrunsrv -S sshd
-
-	为配置putty.exe支持X11而做的配置服务端： 
-	在/etc/sshd_config中配置为：X11Forwarding yes  
-	在/etc/profile 中添加配置： export DISPLAY=:0.0
-
-9, C/C++/fortran77/Python完整的开发环境
-	在cygwin中选择安装：
-	autobuild 
-	autoconf 
-	automake 
-	binutils 
-	cmake 
-	gcc-core 
-	gcc
-	gcc-g++ 
-	gcc-java 
-	make
-	makedepend 
-	pkg-config
-	bashdb
-	ddd
-	python
-
-	unzip
-	zip
-	gpg

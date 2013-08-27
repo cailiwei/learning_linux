@@ -210,4 +210,4 @@ cd_func ()
 
 alias cd=cd_func
 
-alias cls='echo -e "\E[2J"'
+alias cls='echo -e "\E[2J"' # 清屏指令 C + l 也行
