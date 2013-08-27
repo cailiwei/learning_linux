@@ -209,3 +209,5 @@ cd_func ()
 }
 
 alias cd=cd_func
+
+alias cls='echo -e "\E[2J"'

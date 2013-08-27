@@ -1,40 +1,42 @@
 Choose the below software:
-Screen: a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells
+1, Screen: 
+	a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells
 
-Devel（开发）目录下的包:
-gcc-g++: C++ compiler
-gcc-mingw-g++: Mingw32 support headers and libraries for GCC C++
-gcc4-g++: G++ subpackage
-git: Fast Version Control System – core files（它可以从 github 下载软件最新版源码)
-make: The GNU version of the 'make' utility
-openssl-devel: The OpenSSL development environment
-pkg-config: A utility used to retrieve information about installed libraries
-zlib-devel: The zlib compression/decompression library (development)
+2, Devel（开发）目录下的包:
+	gcc-g++: C++ compiler
+	gcc-mingw-g++: Mingw32 support headers and libraries for GCC C++
+	gcc4-g++: G++ subpackage
+	git: Fast Version Control System – core files（它可以从 github 下载软件最新版源码)
+	make: The GNU version of the 'make' utility
+	openssl-devel: The OpenSSL development environment
+	pkg-config: A utility used to retrieve information about installed libraries
+	zlib-devel: The zlib compression/decompression library (development)
 
-Editor目录下的包：
-vim: Vi IMproved - enhanced vi editor
+3, Editor目录下的包：
+	vim: Vi IMproved - enhanced vi editor
 
-Python目录下的包：全部Install方式安装
+4, Python目录下的包：
+	全部Install方式安装
 
-Web目录下的包：
-wget: Utility to retrieve files from the WWW via HTTP and FTP
-curl: Multi-protocol file transfer command-line tool，npm（node's package manager）
+5, Web目录下的包：
+	wget: Utility to retrieve files from the WWW via HTTP and FTP
+	curl: Multi-protocol file transfer command-line tool，npm（node's package manager）
 
-类似vim的Web浏览器:
-w3m
+6, 类似vim的Web浏览器:
+	w3m
 
-配置Cygwin X环境:
-	必选：  xorg-server , xinit
+7, 配置Cygwin X环境:
+	必选：xorg-server, xinit
 	建议选择：xorg-docs , X-start-menu-icons
 	启动X11环境:
 		可以从Windows的开始菜单启动Cygwin X
 	
-添加ssh登录支持(并且支持通过putty访问Cygwin X):
+8, 添加ssh登录支持(并且支持通过putty访问Cygwin X):
 	首先在cygwin中选择安装openssh
 
 	然后用命令 ssh-host-config  配置SSH  注意配置过程中一定要将sshd安装成Windows服务，已方便开机自动启动
 
-	生成ssh1的公钥和密钥：      ssh-keygen -t rsa1
+	生成ssh1的公钥和密钥：ssh-keygen -t rsa1
 
 	生成ssh2的公钥和密钥： 
 	生成公钥： ssh-keygen -t rsa 
@@ -43,16 +45,28 @@ w3m
 	启动sshd服务（如果你需要重启机器的话，此步可免） 
 	cygrunsrv -S sshd
 
-	为配置为putty.exe支持X11而做的配置服务端： 
+	为配置putty.exe支持X11而做的配置服务端： 
 	在/etc/sshd_config中配置为：X11Forwarding yes  
 	在/etc/profile 中添加配置： export DISPLAY=:0.0
 
-C/C++/fortran77/Python完整的开发环境
-	在cygwin中选择安装：autobuild ，autoconf ，automake ，binutils ，cmake ，gcc-core ，gcc,gcc-g77 ，gcc-g++ ，gcc-java ，gcc4-core ，gcc4,gcc4-fortran ，gcc4-g++ ,gcc4-java  ,make ,makedepend ,pkg-config,bashdb,ddd,python
+9, C/C++/fortran77/Python完整的开发环境
+	在cygwin中选择安装：
+	autobuild 
+	autoconf 
+	automake 
+	binutils 
+	cmake 
+	gcc-core 
+	gcc
+	gcc-g++ 
+	gcc-java 
+	make
+	makedepend 
+	pkg-config
+	bashdb
+	ddd
+	python
 
 	unzip
 	zip
-	attr
-	shutdown
-	ssh
 	gpg

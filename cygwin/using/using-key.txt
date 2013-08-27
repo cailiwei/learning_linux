@@ -1,0 +1,4 @@
+1、清屏
+	-- ctrl+l
+	-- 在bashrc中加入 alias cls='echo -e "\E[2J"'
+	-- cmd /c cls

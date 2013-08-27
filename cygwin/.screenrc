@@ -1,5 +1,5 @@
-# Change Ctrl+a to Ctrl+b
-escape b
+# Change Ctrl+a to Ctrl+Z
+escape z
 
 #set coding
 #defencoding GBK
