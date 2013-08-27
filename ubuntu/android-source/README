@@ -1,4 +1,5 @@
-下载高通源码:https://www.codeaurora.org/xwiki/bin/QAEP/release
-	-- repo init -u git://codeaurora.org/platform/manifest.git -b release -m [manifest]
-
+下载高通源码: <https://www.codeaurora.org/xwiki/bin/QAEP/release>
+	
+	$ repo init -u git://codeaurora.org/platform/manifest.git -b release -m [manifest] --repo-url=git://codeaurora.org/tools/repo.git
+	$ sync
 

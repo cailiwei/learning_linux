@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# xpl: 打开指定路径的文件管理器，缺省是当前目录
  
 cygwin=false;
 case "`uname`" in

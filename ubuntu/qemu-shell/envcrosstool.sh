@@ -1,5 +1,5 @@
 #!/bin/bash
-# set crosstool path
+# set crosstool build path
 
 # base=$(dirname $0)
 # TODO please change the base value based on your toolschain dirname path
