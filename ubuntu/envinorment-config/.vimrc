@@ -76,6 +76,15 @@ set shiftwidth=4    " 换行时行间交错使用4个空格
 set autoindent      " 自动对齐
 set ai!             " 设置自动缩进
 
+filetype indent on
+set et
+set ci
+set shiftwidth=4
+autocmd FileType python setlocal et sta sw=4 sts=4
+autocmd FileType make setlocal noexpandtab
+
+" : retab
+
 " TagList设置
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
