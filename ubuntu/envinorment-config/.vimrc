@@ -85,6 +85,11 @@ autocmd FileType make setlocal noexpandtab
 
 " : retab
 
+set list
+set listchars=tab:>-,trail:-
+highlight WhitespaceEOL ctermbg=red guibg=red
+match WhitespaceEOL /\s\+$/
+
 " TagList设置
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
