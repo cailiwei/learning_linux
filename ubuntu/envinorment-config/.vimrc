@@ -104,6 +104,10 @@ map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 nnoremap <silent> <F3> :Rgrep<CR>
 nnoremap <silent> <F4> :Grep<CR>
 
+" 设置NerdTree
+map <F2> :NERDTreeMirror<CR>
+map <F2> :NERDTreeToggle<CR>
+
 "--------------------------------------------------------------------------------
 " 窗口操作的快捷键
 "--------------------------------------------------------------------------------
