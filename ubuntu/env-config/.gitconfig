@@ -1,11 +1,11 @@
 [color]
 	ui = auto
 [user]
-	name = Levy
-	email = cailiwei712@163.com
+	name = Levy-Cai
+	email = cailiwei@hisilicon.com
 [credential]
 	helper = cache --timeout=3600
 [core]
 	editor = vim
 [diff]
-	tool = meld
+	tool = vimdiff
