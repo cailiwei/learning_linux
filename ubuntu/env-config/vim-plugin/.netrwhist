@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/cailiwei/learning_linux/ubuntu/env-config/vim-plugin/nerdtree-5.0.0'
-let g:netrw_dirhist_2='/home/cailiwei/learning_linux/ubuntu/env-config/vim-plugin/bundle/nerdtree/autoload'
-let g:netrw_dirhist_3='/home/cailiwei/learning_linux/ubuntu/env-config/vim-plugin/bundle/nerdtree/autoload/nerdtree'
