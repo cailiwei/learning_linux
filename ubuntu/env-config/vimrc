@@ -19,19 +19,18 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>:echom 'Resourced vimrc file'<CR>
 " When .vimrc is edited, reload it
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 
-call plug#begin('~/.vim/bundle')
-
+" Vim插件管理器
 " Plug 'file://~/.vim/bundle/dein.vim'
 " Plug 'file://~/.vim/bundle/vundle'
 
-Plug 'file://~/.vim/bundle/vim-mark'
+call plug#begin('~/.vim/bundle')
 
 " 搜索工具，依赖ruby，暂不可用
 " Plug 'git://git.wincent.com/command-t.git'
 "<Leader>t触发command-t
 "https://blog.csdn.net/Demorngel/article/details/72642578
 
-"Plug 'file://~/.vim/bundle/vim-airline'
+" Plug 'file://~/.vim/bundle/vim-airline'
 Plug 'vim-airline/vim-airline'
 Plug 'tomasiser/vim-code-dark'
 let g:airline_theme = 'codedark'
@@ -142,7 +141,7 @@ let g:NERDTreeDirArrowExpandable = '?'
 let g:NERDTreeDirArrowCollapsible = '?'
 
 map <C-p> :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>k :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 let g:NERDTreeDirArrows = 1
@@ -227,6 +226,7 @@ Plug 'plasticboy/vim-markdown'
 " zM "折叠所有段落
 " :Toc "显示目录
 let g:vim_markdown_math = 1
+autocmd BufNewFile,BufRead *.md set nofoldenable
 
 Plug 'mzlogin/vim-markdown-toc'
 "在当前光标后生成目录
