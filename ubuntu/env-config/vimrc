@@ -1,15 +1,3 @@
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
-" /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
-" you can find below.  If you wish to change any of those settings, you should
-" do it in this file (/etc/vim/vimrc), since debian.vim will be overwritten
-" everytime an upgrade of the vim packages is performed.  It is recommended to
-" make changes after sourcing debian.vim since it alters the value of the
-" 'compatible' option.
-
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
-
 " Uncomment the next line to make Vim more Vi-compatible
 " NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
 " options, so any other options should be set AFTER setting 'compatible'.
@@ -21,7 +9,8 @@ if has("syntax")
   syntax on
 endif
 
-filetype off
+filetype off " required
+
 let mapleader=","
 " ,ev to open config file
 nmap <silent> <leader>ev :vsplit $MYVIMRC<CR>
@@ -30,31 +19,28 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>:echom 'Resourced vimrc file'<CR>
 " When .vimrc is edited, reload it
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-call vundle#begin()
+call plug#begin('~/.vim/bundle')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Plug 'file://~/.vim/bundle/dein.vim'
+" Plug 'file://~/.vim/bundle/vundle'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
+Plug 'file://~/.vim/bundle/vim-mark'
 
-" plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
+" 搜索工具，依赖ruby，暂不可用
+" Plug 'git://git.wincent.com/command-t.git'
+"<Leader>t触发command-t
+"https://blog.csdn.net/Demorngel/article/details/72642578
 
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+"Plug 'file://~/.vim/bundle/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'tomasiser/vim-code-dark'
+let g:airline_theme = 'codedark'
 
-Plugin 'file://~/.vim/bundle/vim-airline'
-set laststatus=2
+Plug 'ryanoasis/vim-devicons'
+set encoding=UTF-8
 
-Plugin 'file://~/.vim/bundle/syntastic'
-" Bundle 'scrooloose/syntastic'
+" 静态检查插件设置
+Plug 'https://gitcode.net/mirrors/scrooloose/syntastic.git'
 let g:syntastic_error_symbol='>>'
 let g:syntastic_warning_symbol='>'
 let g:syntastic_check_on_open=1
@@ -63,7 +49,6 @@ let g:syntastic_enable_highlighting=1
 let g:syntastic_python_checkers=['pylint'] " 使用pyflakes,速度比pylint快
 let g:syntastic_javascript_checkers = ['jsl', 'jshint']
 let g:syntastic_html_checkers=['tidy', 'jshint']
-" to see error location list
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_loc_list_height = 5
@@ -75,9 +60,9 @@ function! ToggleErrors()
         Errors
     endif
 endfunction
-nnoremap <Leader>s :call ToggleErrors()<cr>
+nnoremap <leader>s :call ToggleErrors()<CR>
 
-Plugin 'file://~/.vim/bundle/ctrlp.vim'
+Plug 'https://gitcode.net/mirrors/ctrlpvim/ctrlp.vim.git'
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
 map <leader>f :CtrlPMRU<CR>
@@ -92,12 +77,11 @@ let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 
-Plugin 'file://~/.vim/bundle/genutils'
-
-Plugin 'file://~/.vim/bundle/lookupfile'
 """"""""""""""""""""""""""""""
 " lookupfile setting
 """"""""""""""""""""""""""""""
+Plug 'file://~/.vim/bundle/genutils'
+Plug 'file://~/.vim/bundle/lookupfile'
 let g:LookupFile_SearchForBufsInTabs = 1
 let g:LookupFile_MinPatLength = 2               "最少输入2个字符才开始查找
 let g:LookupFile_PreserveLastPattern = 0        "不保存上次查找的字符串
@@ -105,78 +89,193 @@ let g:LookupFile_PreservePatternHistory = 1     "保存查找历史
 let g:LookupFile_AlwaysAcceptFirst = 1          "回车打开第一个匹配项目
 let g:LookupFile_AllowNewFiles = 0              "不允许创建不存在的文件
 if filereadable("./filenametags")                "设置tag文件的名字
-let g:LookupFile_TagExpr = '"./filenametags"'
+    let g:LookupFile_TagExpr = '"./filenametags"'
 endif
 
 " lookup file with ignore case
 function! LookupFile_IgnoreCaseFunc(pattern)
-let _tags = &tags
-try
-let &tags = eval(g:LookupFile_TagExpr)
-let newpattern = '\c' . a:pattern
-let tags = taglist(newpattern)
-catch
-echohl ErrorMsg | echo "Exception: " . v:exception | echohl NONE
-return ""
-finally
-let &tags = _tags
-endtry
-" Show the matches for what is typed so far.
-let files = map(tags, 'v:val["filename"]')
-return files
+    let _tags = &tags
+    try
+        let &tags = eval(g:LookupFile_TagExpr)
+        let newpattern = '\c' . a:pattern
+        let tags = taglist(newpattern)
+    catch
+        echohl ErrorMsg | echo "Exception: " . v:exception | echohl NONE
+        return ""
+    finally
+        let &tags = _tags
+    endtry
+    " Show the matches for what is typed so far.
+    let files = map(tags, 'v:val["filename"]')
+    return files
 endfunction
 
 let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc'
+nmap <silent> <Leader>lf <Plug>LookupFile<CR>
 "映射LookupFile为,lk
-nmap <silent> <leader>lf :LUTags<cr>
+nmap <silent> <leader>lt :LUTags<cr>
 "映射LUBufs为,ll
 nmap <silent> <leader>lb :LUBufs<cr>
 "映射LUWalk为,lw
 nmap <silent> <leader>lw :LUWalk<cr>
 
-" git repos on your local machine (i.e. when working on your own plugin)
-" Bundle 'scrooloose/nerdtree'
-Plugin 'file://~/.vim/bundle/nerdtree'
-" How can I open a NERDTree automatically when vim starts up?
-autocmd vimenter * NERDTree
-let NERDTreeWinPos = 'right'
-let NERDTreeWinSize = 28
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'https://gitcode.net/mirrors/scrooloose/nerdtree.git'
+"Plug 'file://~/.vim/bundle/nerdtree'
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
 
-" How can I close vim if the only window left open is a NERDTree?
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-" How can I open a NERDTree automatically when vim starts up if no files were
-" specified?
-autocmd StdinReadPre * let s:std_in = 1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" If another buffer tries to replace NERDTree, put it in the other window, and
+" bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-" How can I open NERDTree automatically when vim starts up on opening a
-" directory?
-autocmd StdinReadPre * let s:std_in=0
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" Open the existing NERDTree on each new tab.
+autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+
+let g:NERDTreeDirArrowExpandable = '?'
+let g:NERDTreeDirArrowCollapsible = '?'
 
 map <C-p> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
-Bundle 'fholgado/minibufexpl.vim'
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplMoreThanOne = 0
+Plug 'https://gitcode.net/mirrors/Xuyuanp/nerdtree-git-plugin.git'
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+                \ 'Modified'  :'✹',
+                \ 'Staged'    :'✚',
+                \ 'Untracked' :'✭',
+                \ 'Renamed'   :'➜',
+                \ 'Unmerged'  :'═',
+                \ 'Deleted'   :'✖',
+                \ 'Dirty'     :'✗',
+                \ 'Ignored'   :'☒',
+                \ 'Clean'     :'✔︎',
+                \ 'Unknown'   :'?',
+                \ }
 
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+let g:NERDTreeGitStatusShowIgnored = 1
+let g:NERDTreeGitStatusUseNerdFonts = 1
 
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-Plugin 'ascenator/L9', {'name': 'newL9'}
+" YouCompleteMe
+" https://blog.csdn.net/liao20081228/article/details/80347889
+Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+" Python Semantic Completion
+let g:ycm_python_binary_path = '/usr/bin/python3'
+" C family Completion Path
+let g:ycm_global_ycm_extra_conf='~/bin/.ycm_extra_conf.py'
+" 跳转快捷键
+nnoremap <c-k> :YcmCompleter GoToDeclaration<CR>|
+nnoremap <c-h> :YcmCompleter GoToDefinition<CR>|
+nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>|
+" 停止提示是否载入本地ycm_extra_conf文件
+let g:ycm_confirm_extra_conf = 0
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax = 1
+" 开启 YCM 基于标签引擎
+let g:ycm_collect_identifiers_from_tags_files = 1
+" 从第2个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_min_num_identifier_candidate_chars = 2
+let g:ycm_semantic_triggers =  {
+            \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+            \ 'cs,lua,javascript': ['re!\w{2}'],
+            \ }
+" 在注释输入中也能补全
+let g:ycm_complete_in_comments = 1
+" 在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1
+" 注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" 弹出列表时选择第1项的快捷键(默认为<TAB>和<Down>)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" 弹出列表时选择前1项的快捷键(默认为<S-TAB>和<UP>)
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" 主动补全, 默认为<C-Space>
+let g:ycm_key_invoke_completion = ['<C-Space>']
+" 停止显示补全列表(防止列表影响视野), 可以按<C-Space>重新弹出
+let g:ycm_key_list_stop_completion = ['<C-y>']
+let g:ycm_filetype_whitelist = {
+            \ "c":1,
+            \ "cpp":1, 
+            \ "objc":1,
+            \ "sh":1,
+            \ "zsh":1,
+            \ "zimbu":1,
+            \ }
 
-" All of your Plugins must be added before the following line
-call vundle#end()
+Plug 'godlygeek/tabular'
+Plug 'SirVer/ultisnips',{'for':'markdown'}
+Plug 'plasticboy/vim-markdown'
+" [[ "跳转上一个标题
+" ]] "跳转下一个标题
+" ]c "跳转到当前标题
+" ]u "跳转到副标题
+" zr "打开下一级折叠
+" zR "打开所有折叠
+" zm "折叠当前段落
+" zM "折叠所有段落
+" :Toc "显示目录
+let g:vim_markdown_math = 1
+
+Plug 'mzlogin/vim-markdown-toc'
+"在当前光标后生成目录
+":GenTocMarked
+"更新目录
+":UpdateToc
+"取消储存时自动更新目录
+let g:vmt_auto_update_on_save = 0
+
+function RToc()
+    exe "/-toc .* -->"
+    let lstart=line('.')
+    exe "/-toc -->"
+    let lnum=line('.')
+    execute lstart.",".lnum."g/           /d"
+endfunction
+
+Plug 'iamcco/markdown-preview.nvim'
+" 打开/关闭预览
+":MarkdownPreviewToggel
+" 指定浏览器路径
+let g:mkdp_path_to_chrome = "/usr/bin/google-chrome"
+" 指定预览主题，默认Github
+let g:mkdp_markdown_css = ''
+
+" Initialize plugin system
+call plug#end()
+
+"-----------------------------------------------------------------
+" plugin - NERD_commenter.vim 注释代码用的，
+" [count],cc 光标以下count行逐行添加注释(7,cc)
+" [count],cu 光标以下count行逐行取消注释(7,cu)
+" [count],cm 光标以下count行尝试添加块注释(7,cm)
+" ,cA 在行尾插入 /* */,并且进入插入模式。 这个命令方便写注释。
+" 注：count参数可选，无则默认为选中行或当前行
+"-----------------------------------------------------------------
+let NERDSpaceDelims = 1 " 让注释符与语句之间留一个空格
+let NERDCompactSexyComs = 1 " 多行注释时样子更好看
+
+"-----------------------------------------------------------------
+" plugin - DoxygenToolkit.vim 由注释生成文档，并且能够快速生成函数标准注释
+"-----------------------------------------------------------------
+let g:DoxygenToolkit_authorName="cailiwei712@163.com"
+let g:DoxygenToolkit_briefTag_funcName="yes"
+map <leader>da :DoxAuthor<CR>
+map <leader>df :Dox<CR>
+map <leader>db :DoxBlock<CR>
+map <leader>dc a /* */<LEFT><LEFT><LEFT>
+"-----------------------------------------------------------------
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
@@ -192,18 +291,6 @@ if has("autocmd")
   filetype plugin indent on
 endif
 
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
 " ------------------------------------------------------------------------- "
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
@@ -217,10 +304,9 @@ set autowrite       " Automatically save before commands like :next and :make
 "set mouse=a        " Enable mouse usage (all modes)
 set hlsearch
 set nu
+set cursorline      " 突出显示当前行
 set cindent
 set tabstop=4
-set shiftwidth=4
-set autoindent
 set backspace=2
 set mouse=v
 set selection=exclusive
@@ -236,18 +322,13 @@ set ruler           " 在编辑过程中，在右下角显示光标位置的状�
 " 编程相关的设置
 "--------------------------------------------------------------------------------
 "set completeopt=longest,menu    " 关掉智能补全时的预览窗口
-filetype plugin indent on       " 加了这句才可以用智能补全
 syn on              " 打开语法高亮
-set showmatch       " 设置匹配模式，类似当输入一个左括号时会匹配相应的那个右括号
 set smartindent     " 智能对齐方式
 set shiftwidth=4    " 换行时行间交错使用4个空格
 set autoindent      " 自动对齐
 set ai!             " 设置自动缩进
 
-filetype indent on
 set et
-set ci
-set shiftwidth=4
 autocmd FileType python setlocal et sta sw=4 sts=4
 autocmd FileType make setlocal noexpandtab
 " : retab
